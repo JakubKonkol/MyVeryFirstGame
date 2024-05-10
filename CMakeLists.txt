@@ -4,7 +4,7 @@ project(Game)
 set(CMAKE_CXX_STANDARD 17)
 
 include_directories(sdl/Include)
-include_directories(include)
+include_directories(src)
 
 set(CXXFLAGS "-std=c++17")
 set(LDFLAGS "")

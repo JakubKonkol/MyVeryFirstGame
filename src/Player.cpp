@@ -1,6 +1,8 @@
 #include "Player.h"
 #include <SDL2/SDL.h>
 #include <cmath>
+
+auto *keys = SDL_GetKeyboardState(NULL);
 Player::Player(int x, int y) {
     mRect.x = x; // position x
     mRect.y = y; // position y
@@ -13,23 +15,38 @@ Player::Player(int x, int y) {
 
 // Handle events
 void Player::handleEvent(SDL_Event& event) {
-    if (event.type == SDL_KEYDOWN) {
-        switch (event.key.keysym.sym) {
-            case SDLK_a:
-                velocity_.x -= 1;
-            break;
-            case SDLK_d:
-                velocity_.x += 1;
-            break;
-            case SDLK_w:
-                velocity_.y -= 1;
-            break;
-            case SDLK_s:
-                velocity_.y += 1;
-            break;
-        }
+    std::cout << "Handling event" << std::endl;
+    if(keys[SDL_SCANCODE_A]) {
+        velocity_.x = -1;
     }
-
+    if(keys[SDL_SCANCODE_D]) {
+        velocity_.x = 1;
+    }
+    if(keys[SDL_SCANCODE_W]) {
+        velocity_.y = -1;
+    }
+    if(keys[SDL_SCANCODE_S]) {
+        velocity_.y = 1;
+    }
+    if(keys[SDL_SCANCODE_A] && keys[SDL_SCANCODE_D]){
+        velocity_.x = 0;
+        velocity_.y = 0;
+    } else if(keys[SDL_SCANCODE_W] && keys[SDL_SCANCODE_S]){
+        velocity_.x = 0;
+        velocity_.y = 0;
+    } else if(keys[SDL_SCANCODE_A] && keys[SDL_SCANCODE_W]){
+        velocity_.x = -1/std::sqrt(2);
+        velocity_.y = -1/std::sqrt(2);
+    } else if(keys[SDL_SCANCODE_A] && keys[SDL_SCANCODE_S]){
+        velocity_.x = -1/std::sqrt(2);
+        velocity_.y = 1/std::sqrt(2);
+    } else if(keys[SDL_SCANCODE_D] && keys[SDL_SCANCODE_W]){
+        velocity_.x = 1/std::sqrt(2);
+        velocity_.y = -1/std::sqrt(2);
+    } else if(keys[SDL_SCANCODE_D] && keys[SDL_SCANCODE_S]){
+        velocity_.x = 1/std::sqrt(2);
+        velocity_.y = 1/std::sqrt(2);
+    }
 }
 
 // Calculate and update player position
@@ -46,8 +63,8 @@ void Player::update(int SCREEN_WIDTH, int SCREEN_HEIGHT, double dt) {
     int old_y = mRect.y;
 
     // Calculate new position
-    mRect.x += velocity_.x * 200 * dt;
-    mRect.y += velocity_.y * 200 * dt;
+    mRect.x += velocity_.x * 250 * dt;
+    mRect.y += velocity_.y * 250 * dt;
 
     // Check for collision with walls
     if (mRect.x < 0 || mRect.x + mRect.w > SCREEN_WIDTH || mRect.y < 0 || mRect.y + mRect.h > SCREEN_HEIGHT) {
@@ -56,7 +73,7 @@ void Player::update(int SCREEN_WIDTH, int SCREEN_HEIGHT, double dt) {
     }
 
     // Slow down with friction to make it buttery smooth
-    const double friction = 0.1;
+    const double friction = 0.05;
     if (fabs(velocity_.x) > 0.1) {
         velocity_.x *= 1.0 - friction;
     } else {
@@ -69,8 +86,8 @@ void Player::update(int SCREEN_WIDTH, int SCREEN_HEIGHT, double dt) {
     }
 
     // Debug
-    std::cout << "Player position: " << mRect.x << " " << mRect.y << std::endl;
-    std::cout << "Player velocity: " << velocity_.x << " " << velocity_.y << std::endl;
+    // std::cout << "Player position: " << mRect.x << " " << mRect.y << std::endl;
+    // std::cout << "Player velocity: " << velocity_.x << " " << velocity_.y << std::endl;
 }
 
 
