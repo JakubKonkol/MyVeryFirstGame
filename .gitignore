@@ -1,0 +1,30 @@
+# Pliki wygenerowane przez CLion
+.idea/
+
+# Pliki wykonywalne
+game
+
+# Pliki związane z budową
+CMakeFiles/
+cmake-build-debug/
+cmake-build-release/
+CMakeCache.txt
+cmake_install.cmake
+
+# Pliki konfiguracyjne CMake
+CMakeLists.txt.user
+
+# Pliki wykonywalne i debugowe
+*.exe
+*.out
+*.app
+*.dSYM/
+
+# Pliki tworzone przez kompilator
+*.o
+*.obj
+
+# Pliki konfiguracyjne
+*.suo
+*.cbp
+*.orig
