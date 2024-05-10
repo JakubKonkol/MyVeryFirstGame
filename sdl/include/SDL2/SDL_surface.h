@@ -328,11 +328,11 @@ extern DECLSPEC void SDLCALL SDL_UnlockSurface(SDL_Surface * surface);
  * The new surface should be freed with SDL_FreeSurface(). Not doing so will
  * result in a memory leak.
  *
- * src is an open SDL_RWops buffer, typically loaded with SDL_RWFromFile.
+ * sdl is an open SDL_RWops buffer, typically loaded with SDL_RWFromFile.
  * Alternitavely, you might also use the macro SDL_LoadBMP to load a bitmap
  * from a file, convert it to an SDL_Surface and then close the file.
  *
- * \param src the data stream for the surface
+ * \param sdl the data stream for the surface
  * \param freesrc non-zero to close the stream after being read
  * \returns a pointer to a new SDL_Surface structure or NULL if there was an
  *          error; call SDL_GetError() for more information.
@@ -658,7 +658,7 @@ extern DECLSPEC SDL_Surface *SDLCALL SDL_DuplicateSurface(SDL_Surface * surface)
  * surface. The new, optimized surface can then be used as the source for
  * future blits, making them faster.
  *
- * \param src the existing SDL_Surface structure to convert
+ * \param sdl the existing SDL_Surface structure to convert
  * \param fmt the SDL_PixelFormat structure that the new surface is optimized
  *            for
  * \param flags the flags are unused and should be set to 0; this is a
@@ -683,7 +683,7 @@ extern DECLSPEC SDL_Surface *SDLCALL SDL_ConvertSurface
  * it might be easier to call but it doesn't have access to palette
  * information for the destination surface, in case that would be important.
  *
- * \param src the existing SDL_Surface structure to convert
+ * \param sdl the existing SDL_Surface structure to convert
  * \param pixel_format the SDL_PixelFormatEnum that the new surface is
  *                     optimized for
  * \param flags the flags are unused and should be set to 0; this is a
@@ -705,8 +705,8 @@ extern DECLSPEC SDL_Surface *SDLCALL SDL_ConvertSurfaceFormat
  *
  * \param width the width of the block to copy, in pixels
  * \param height the height of the block to copy, in pixels
- * \param src_format an SDL_PixelFormatEnum value of the `src` pixels format
- * \param src a pointer to the source pixels
+ * \param src_format an SDL_PixelFormatEnum value of the `sdl` pixels format
+ * \param sdl a pointer to the source pixels
  * \param src_pitch the pitch of the source pixels, in bytes
  * \param dst_format an SDL_PixelFormatEnum value of the `dst` pixels format
  * \param dst a pointer to be filled in with new pixel data
@@ -725,14 +725,14 @@ extern DECLSPEC int SDLCALL SDL_ConvertPixels(int width, int height,
 /**
  * Premultiply the alpha on a block of pixels.
  *
- * This is safe to use with src == dst, but not for other overlapping areas.
+ * This is safe to use with sdl == dst, but not for other overlapping areas.
  *
  * This function is currently only implemented for SDL_PIXELFORMAT_ARGB8888.
  *
  * \param width the width of the block to convert, in pixels
  * \param height the height of the block to convert, in pixels
- * \param src_format an SDL_PixelFormatEnum value of the `src` pixels format
- * \param src a pointer to the source pixels
+ * \param src_format an SDL_PixelFormatEnum value of the `sdl` pixels format
+ * \param sdl a pointer to the source pixels
  * \param src_pitch the pitch of the source pixels, in bytes
  * \param dst_format an SDL_PixelFormatEnum value of the `dst` pixels format
  * \param dst a pointer to be filled in with premultiplied pixel data
@@ -806,7 +806,7 @@ extern DECLSPEC int SDLCALL SDL_FillRects
  *
  *  This assumes that the source and destination rectangles are
  *  the same size.  If either \c srcrect or \c dstrect are NULL, the entire
- *  surface (\c src or \c dst) is copied.  The final blit rectangles are saved
+ *  surface (\c sdl or \c dst) is copied.  The final blit rectangles are saved
  *  in \c srcrect and \c dstrect after all clipping is performed.
  *
  *  \returns 0 if the blit is successful, otherwise it returns -1.
@@ -883,7 +883,7 @@ extern DECLSPEC int SDLCALL SDL_UpperBlit
  * Unless you know what you're doing, you should be using SDL_BlitSurface()
  * instead.
  *
- * \param src the SDL_Surface structure to be copied from
+ * \param sdl the SDL_Surface structure to be copied from
  * \param srcrect the SDL_Rect structure representing the rectangle to be
  *                copied, or NULL to copy the entire surface
  * \param dst the SDL_Surface structure that is the blit target
@@ -947,7 +947,7 @@ extern DECLSPEC int SDLCALL SDL_UpperBlitScaled
  * This is a semi-private function and it performs low-level surface blitting,
  * assuming the input rectangles have already been clipped.
  *
- * \param src the SDL_Surface structure to be copied from
+ * \param sdl the SDL_Surface structure to be copied from
  * \param srcrect the SDL_Rect structure representing the rectangle to be
  *                copied
  * \param dst the SDL_Surface structure that is the blit target

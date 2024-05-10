@@ -789,7 +789,7 @@ extern DECLSPEC void SDLCALL SDL_PauseAudioDevice(SDL_AudioDeviceID dev,
 /**
  * Load the audio data of a WAVE file into memory.
  *
- * Loading a WAVE file requires `src`, `spec`, `audio_buf` and `audio_len` to
+ * Loading a WAVE file requires `sdl`, `spec`, `audio_buf` and `audio_len` to
  * be valid pointers. The entire data portion of the file is then loaded into
  * memory and decoded if necessary.
  *
@@ -823,7 +823,7 @@ extern DECLSPEC void SDLCALL SDL_PauseAudioDevice(SDL_AudioDeviceID dev,
  * the headers), too big, or unsupported causes an error. Additionally, any
  * critical I/O error from the data source will terminate the loading process
  * with an error. The function returns NULL on error and in all cases (with
- * the exception of `src` being NULL), an appropriate error message will be
+ * the exception of `sdl` being NULL), an appropriate error message will be
  * set.
  *
  * It is required that the data source supports seeking.
@@ -841,7 +841,7 @@ extern DECLSPEC void SDLCALL SDL_PauseAudioDevice(SDL_AudioDeviceID dev,
  * SDL_LoadWAV("sample.wav", &spec, &buf, &len);
  * ```
  *
- * \param src The data source for the WAVE data
+ * \param sdl The data source for the WAVE data
  * \param freesrc If non-zero, SDL will _always_ free the data source
  * \param spec An SDL_AudioSpec that will be filled in with the wave file's
  *             format details
@@ -1126,14 +1126,14 @@ extern DECLSPEC void SDLCALL SDL_FreeAudioStream(SDL_AudioStream *stream);
  * This function is equivalent to calling...
  *
  * ```c
- * SDL_MixAudioFormat(dst, src, format, len, volume);
+ * SDL_MixAudioFormat(dst, sdl, format, len, volume);
  * ```
  *
  * ...where `format` is the obtained format of the audio device from the
  * legacy SDL_OpenAudio() function.
  *
  * \param dst the destination for the mixed audio
- * \param src the source audio buffer to be mixed
+ * \param sdl the source audio buffer to be mixed
  * \param len the length of the audio buffer in bytes
  * \param volume ranges from 0 - 128, and should be set to SDL_MIX_MAXVOLUME
  *               for full audio volume
@@ -1148,7 +1148,7 @@ extern DECLSPEC void SDLCALL SDL_MixAudio(Uint8 * dst, const Uint8 * src,
 /**
  * Mix audio data in a specified format.
  *
- * This takes an audio buffer `src` of `len` bytes of `format` data and mixes
+ * This takes an audio buffer `sdl` of `len` bytes of `format` data and mixes
  * it into `dst`, performing addition, volume adjustment, and overflow
  * clipping. The buffer pointed to by `dst` must also be `len` bytes of
  * `format` data.
@@ -1166,7 +1166,7 @@ extern DECLSPEC void SDLCALL SDL_MixAudio(Uint8 * dst, const Uint8 * src,
  * audio stream with a volume adjustment.
  *
  * \param dst the destination for the mixed audio
- * \param src the source audio buffer to be mixed
+ * \param sdl the source audio buffer to be mixed
  * \param format the SDL_AudioFormat structure representing the desired audio
  *               format
  * \param len the length of the audio buffer in bytes

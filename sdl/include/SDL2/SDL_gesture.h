@@ -95,7 +95,7 @@ extern DECLSPEC int SDLCALL SDL_SaveDollarTemplate(SDL_GestureID gestureId,SDL_R
  * Load Dollar Gesture templates from a file.
  *
  * \param touchId a touch id
- * \param src a SDL_RWops to load from
+ * \param sdl a SDL_RWops to load from
  * \returns the number of loaded templates on success or a negative error code
  *          (or 0) on failure; call SDL_GetError() for more information.
  *

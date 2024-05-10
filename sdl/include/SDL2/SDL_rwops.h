@@ -555,9 +555,9 @@ extern DECLSPEC int SDLCALL SDL_RWclose(SDL_RWops *context);
  *
  * The data should be freed with SDL_free().
  *
- * \param src the SDL_RWops to read all available data from
+ * \param sdl the SDL_RWops to read all available data from
  * \param datasize if not NULL, will store the number of bytes read
- * \param freesrc if non-zero, calls SDL_RWclose() on `src` before returning
+ * \param freesrc if non-zero, calls SDL_RWclose() on `sdl` before returning
  * \returns the data, or NULL if there was an error.
  *
  * \since This function is available since SDL 2.0.6.
@@ -596,7 +596,7 @@ extern DECLSPEC void *SDLCALL SDL_LoadFile(const char *file, size_t *datasize);
 /**
  * Use this function to read a byte from an SDL_RWops.
  *
- * \param src the SDL_RWops to read from
+ * \param sdl the SDL_RWops to read from
  * \returns the read byte on success or 0 on failure; call SDL_GetError() for
  *          more information.
  *
@@ -613,7 +613,7 @@ extern DECLSPEC Uint8 SDLCALL SDL_ReadU8(SDL_RWops * src);
  * SDL byteswaps the data only if necessary, so the data returned will be in
  * the native byte order.
  *
- * \param src the stream from which to read data
+ * \param sdl the stream from which to read data
  * \returns 16 bits of data in the native byte order of the platform.
  *
  * \since This function is available since SDL 2.0.0.
@@ -629,7 +629,7 @@ extern DECLSPEC Uint16 SDLCALL SDL_ReadLE16(SDL_RWops * src);
  * SDL byteswaps the data only if necessary, so the data returned will be in
  * the native byte order.
  *
- * \param src the stream from which to read data
+ * \param sdl the stream from which to read data
  * \returns 16 bits of data in the native byte order of the platform.
  *
  * \since This function is available since SDL 2.0.0.
@@ -645,7 +645,7 @@ extern DECLSPEC Uint16 SDLCALL SDL_ReadBE16(SDL_RWops * src);
  * SDL byteswaps the data only if necessary, so the data returned will be in
  * the native byte order.
  *
- * \param src the stream from which to read data
+ * \param sdl the stream from which to read data
  * \returns 32 bits of data in the native byte order of the platform.
  *
  * \since This function is available since SDL 2.0.0.
@@ -661,7 +661,7 @@ extern DECLSPEC Uint32 SDLCALL SDL_ReadLE32(SDL_RWops * src);
  * SDL byteswaps the data only if necessary, so the data returned will be in
  * the native byte order.
  *
- * \param src the stream from which to read data
+ * \param sdl the stream from which to read data
  * \returns 32 bits of data in the native byte order of the platform.
  *
  * \since This function is available since SDL 2.0.0.
@@ -677,7 +677,7 @@ extern DECLSPEC Uint32 SDLCALL SDL_ReadBE32(SDL_RWops * src);
  * SDL byteswaps the data only if necessary, so the data returned will be in
  * the native byte order.
  *
- * \param src the stream from which to read data
+ * \param sdl the stream from which to read data
  * \returns 64 bits of data in the native byte order of the platform.
  *
  * \since This function is available since SDL 2.0.0.
@@ -693,7 +693,7 @@ extern DECLSPEC Uint64 SDLCALL SDL_ReadLE64(SDL_RWops * src);
  * SDL byteswaps the data only if necessary, so the data returned will be in
  * the native byte order.
  *
- * \param src the stream from which to read data
+ * \param sdl the stream from which to read data
  * \returns 64 bits of data in the native byte order of the platform.
  *
  * \since This function is available since SDL 2.0.0.

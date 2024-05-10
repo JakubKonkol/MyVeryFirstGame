@@ -64,11 +64,11 @@ typedef enum
  */
 typedef enum
 {
-    SDL_BLENDOPERATION_ADD              = 0x1,  /**< dst + src: supported by all renderers */
-    SDL_BLENDOPERATION_SUBTRACT         = 0x2,  /**< src - dst : supported by D3D9, D3D11, OpenGL, OpenGLES */
-    SDL_BLENDOPERATION_REV_SUBTRACT     = 0x3,  /**< dst - src : supported by D3D9, D3D11, OpenGL, OpenGLES */
-    SDL_BLENDOPERATION_MINIMUM          = 0x4,  /**< min(dst, src) : supported by D3D9, D3D11 */
-    SDL_BLENDOPERATION_MAXIMUM          = 0x5   /**< max(dst, src) : supported by D3D9, D3D11 */
+    SDL_BLENDOPERATION_ADD              = 0x1,  /**< dst + sdl: supported by all renderers */
+    SDL_BLENDOPERATION_SUBTRACT         = 0x2,  /**< sdl - dst : supported by D3D9, D3D11, OpenGL, OpenGLES */
+    SDL_BLENDOPERATION_REV_SUBTRACT     = 0x3,  /**< dst - sdl : supported by D3D9, D3D11, OpenGL, OpenGLES */
+    SDL_BLENDOPERATION_MINIMUM          = 0x4,  /**< min(dst, sdl) : supported by D3D9, D3D11 */
+    SDL_BLENDOPERATION_MAXIMUM          = 0x5   /**< max(dst, sdl) : supported by D3D9, D3D11 */
 } SDL_BlendOperation;
 
 /**
@@ -107,14 +107,14 @@ typedef enum
  * dstA = alphaOperation(srcA * srcAlphaFactor, dstA * dstAlphaFactor);
  * ```
  *
- * Where the functions `colorOperation(src, dst)` and `alphaOperation(src,
+ * Where the functions `colorOperation(sdl, dst)` and `alphaOperation(sdl,
  * dst)` can return one of the following:
  *
- * - `src + dst`
- * - `src - dst`
- * - `dst - src`
- * - `min(src, dst)`
- * - `max(src, dst)`
+ * - `sdl + dst`
+ * - `sdl - dst`
+ * - `dst - sdl`
+ * - `min(sdl, dst)`
+ * - `max(sdl, dst)`
  *
  * The red, green, and blue components are always multiplied with the first,
  * second, and third components of the SDL_BlendFactor, respectively. The
