@@ -1,7 +1,8 @@
 #include "Player.h"
 #include <SDL2/SDL.h>
 #include <cmath>
-
+#include <vector>
+std::vector<Bullet> bullets;
 auto *keys = SDL_GetKeyboardState(NULL);
 Player::Player(int x, int y) {
     mRect.x = x; // position x
@@ -15,37 +16,55 @@ Player::Player(int x, int y) {
 
 // Handle events
 void Player::handleEvent(SDL_Event& event) {
-    std::cout << "Handling event" << std::endl;
-    if(keys[SDL_SCANCODE_A]) {
-        velocity_.x = -1;
+    switch (event.key.keysym.scancode) {
+        case SDL_SCANCODE_A:
+            velocity_.x = -1;
+        break;
+        case SDL_SCANCODE_D:
+            velocity_.x = 1;
+        break;
+        case SDL_SCANCODE_W:
+            velocity_.y = -1;
+        break;
+        case SDL_SCANCODE_S:
+            velocity_.y = 1;
+        break;
+        case SDL_SCANCODE_LEFT:
+            bullets.push_back(Bullet(mRect.x + mRect.w / 2, mRect.y + mRect.h / 2, -5, 0));
+        break;
+        case SDL_SCANCODE_RIGHT:
+            bullets.push_back(Bullet(mRect.x + mRect.w / 2, mRect.y + mRect.h / 2, 5, 0));
+        break;
+        case SDL_SCANCODE_UP:
+            bullets.push_back(Bullet(mRect.x + mRect.w / 2, mRect.y + mRect.h / 2, 0, -5));
+        break;
+        case SDL_SCANCODE_DOWN:
+            bullets.push_back(Bullet(mRect.x + mRect.w / 2, mRect.y + mRect.h / 2, 0, 5));
+        break;
+        default:
+            break;
     }
-    if(keys[SDL_SCANCODE_D]) {
-        velocity_.x = 1;
-    }
-    if(keys[SDL_SCANCODE_W]) {
-        velocity_.y = -1;
-    }
-    if(keys[SDL_SCANCODE_S]) {
-        velocity_.y = 1;
-    }
-    if(keys[SDL_SCANCODE_A] && keys[SDL_SCANCODE_D]){
-        velocity_.x = 0;
-        velocity_.y = 0;
-    } else if(keys[SDL_SCANCODE_W] && keys[SDL_SCANCODE_S]){
-        velocity_.x = 0;
-        velocity_.y = 0;
-    } else if(keys[SDL_SCANCODE_A] && keys[SDL_SCANCODE_W]){
+    if (keys[SDL_SCANCODE_A] && keys[SDL_SCANCODE_W]) {
         velocity_.x = -1/std::sqrt(2);
         velocity_.y = -1/std::sqrt(2);
-    } else if(keys[SDL_SCANCODE_A] && keys[SDL_SCANCODE_S]){
+    }
+    if (keys[SDL_SCANCODE_A] && keys[SDL_SCANCODE_S]) {
         velocity_.x = -1/std::sqrt(2);
         velocity_.y = 1/std::sqrt(2);
-    } else if(keys[SDL_SCANCODE_D] && keys[SDL_SCANCODE_W]){
+    }
+    if (keys[SDL_SCANCODE_D] && keys[SDL_SCANCODE_W]) {
         velocity_.x = 1/std::sqrt(2);
         velocity_.y = -1/std::sqrt(2);
-    } else if(keys[SDL_SCANCODE_D] && keys[SDL_SCANCODE_S]){
+    }
+    if (keys[SDL_SCANCODE_D] && keys[SDL_SCANCODE_S]) {
         velocity_.x = 1/std::sqrt(2);
         velocity_.y = 1/std::sqrt(2);
+    }
+    if (keys[SDL_SCANCODE_W] && keys[SDL_SCANCODE_S]) {
+        velocity_.y = 0;
+    }
+    if (keys[SDL_SCANCODE_A] && keys[SDL_SCANCODE_D]) {
+        velocity_.x = 0;
     }
 }
 
@@ -63,8 +82,8 @@ void Player::update(int SCREEN_WIDTH, int SCREEN_HEIGHT, double dt) {
     int old_y = mRect.y;
 
     // Calculate new position
-    mRect.x += velocity_.x * 250 * dt;
-    mRect.y += velocity_.y * 250 * dt;
+    mRect.x += velocity_.x * 200 * dt;
+    mRect.y += velocity_.y * 200 * dt;
 
     // Check for collision with walls
     if (mRect.x < 0 || mRect.x + mRect.w > SCREEN_WIDTH || mRect.y < 0 || mRect.y + mRect.h > SCREEN_HEIGHT) {
@@ -73,7 +92,7 @@ void Player::update(int SCREEN_WIDTH, int SCREEN_HEIGHT, double dt) {
     }
 
     // Slow down with friction to make it buttery smooth
-    const double friction = 0.05;
+    const double friction = 0.03;
     if (fabs(velocity_.x) > 0.1) {
         velocity_.x *= 1.0 - friction;
     } else {
@@ -88,11 +107,25 @@ void Player::update(int SCREEN_WIDTH, int SCREEN_HEIGHT, double dt) {
     // Debug
     // std::cout << "Player position: " << mRect.x << " " << mRect.y << std::endl;
     // std::cout << "Player velocity: " << velocity_.x << " " << velocity_.y << std::endl;
+
+    for (auto& bullet : bullets) {
+        bullet.update(dt);
+
+        // Check for collision with walls
+        if (bullet.mRect.x < 0 || bullet.mRect.x + bullet.mRect.w > SCREEN_WIDTH ||
+            bullet.mRect.y < 0 || bullet.mRect.y + bullet.mRect.h > SCREEN_HEIGHT) {
+            bullet = bullets.back();
+            bullets.pop_back();
+            }
+    }
 }
 
 
 // Render player
 void Player::render(SDL_Renderer* renderer) {
+    for (auto& bullet : bullets) {
+        bullet.render(renderer);
+    }
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
     SDL_RenderFillRect(renderer, &mRect);
 }

@@ -1,11 +1,12 @@
 #ifndef PLAYER_H
 #define PLAYER_H
-
-#include <SDL2/SDL.h>
+#include <vector>
 struct VELOCITY {
     double x;
     double y;
 };
+#include <SDL2/SDL.h>
+#include "Bullet.h"
 class Player {
 public:
     Player(int x, int y);
@@ -16,6 +17,7 @@ public:
 private:
     SDL_Rect mRect;
     VELOCITY velocity_;
+    std::vector<Bullet> bullets;
 
 };
 

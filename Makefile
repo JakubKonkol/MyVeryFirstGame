@@ -1,6 +1,5 @@
-CXXFLAGS = -Isdl/Include -I./include
-LDFLAGS = -Lsdl/lib -L./src
-
+CXXFLAGS = -Isdl/Include -Isrc -std=c++17 -pthread
+LDFLAGS = -Lsdl/lib -Lsrc
 ifeq ($(OS),Windows_NT)
 	RM = del /q /f
 	EXECUTABLE = game.exe
@@ -12,7 +11,7 @@ endif
 all: build
 
 build: main.cpp
-	g++ -std=c++17 $(CXXFLAGS) $(LDFLAGS) -o $(EXECUTABLE) main.cpp -lmingw32 -lSDL2main -lSDL2
+	g++ $(CXXFLAGS) $(LDFLAGS) -o $(EXECUTABLE) main.cpp -lmingw32 -lSDL2main -lSDL2
 	./$(EXECUTABLE)
 
 clean:

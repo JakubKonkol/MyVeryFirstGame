@@ -1,10 +1,12 @@
 #include <chrono>
 #include <SDL2/SDL.h>
 #include <iostream>
+#include <random>
 #include <thread>
 
 
 #include "src/Player.cpp"
+#include "src/Bullet.cpp"
 
 #define SCREEN_WIDTH 1280
 #define SCREEN_HEIGHT 720
