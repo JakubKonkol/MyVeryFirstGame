@@ -1,5 +1,4 @@
 #include "Bullet.h"
-#include <SDL2/SDL.h>
 Bullet::Bullet(int x, int y, int velx, int vely) {
     mRect.x = x;
     mRect.y = y;

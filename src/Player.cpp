@@ -69,7 +69,9 @@ void Player::handleEvent(SDL_Event& event) {
 }
 
 // Calculate and update player position
-void Player::update(int SCREEN_WIDTH, int SCREEN_HEIGHT, double dt) {
+void Player::update(int SCREEN_WIDTH, int SCREEN_HEIGHT, double dt, std::vector<Enemy>& enemies) {
+    checkBulletEnemyCollision(enemies);
+
     // Lets limit velocity
     int max_velocity = 5;
     if (velocity_.x > max_velocity) velocity_.x = max_velocity;
@@ -119,7 +121,21 @@ void Player::update(int SCREEN_WIDTH, int SCREEN_HEIGHT, double dt) {
             }
     }
 }
+void Player::checkBulletEnemyCollision(std::vector<Enemy>& enemies) {
+    for (auto& bullet : bullets) {
+        for (auto& enemy : enemies) {
+            if (SDL_HasIntersection(&bullet.mRect, &enemy.mRect)) {
+                enemy.isHit = true;
+                bullet = bullets.back();
+                bullets.pop_back();
 
+                enemy = enemies.back();
+                enemies.pop_back();
+                break;
+            }
+        }
+    }
+}
 
 // Render player
 void Player::render(SDL_Renderer* renderer) {
