@@ -1,6 +1,6 @@
 CXXFLAGS = -Isdl/Include -Isrc -std=c++17 -pthread
 LDFLAGS = -Lsrc
-# Windows
+# Windows (WIP)
 ifeq ($(OS),Windows_NT)
 	RM = del /q /f
 	EXECUTABLE = game.exe
