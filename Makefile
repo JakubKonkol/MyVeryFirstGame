@@ -1,10 +1,14 @@
-CXXFLAGS = -Isdl/Include -Isrc -std=c++17 -pthread
+CXXFLAGS = -Isrc -std=c++17 -pthread
 LDFLAGS = -Lsrc
-# Windows (WIP)
+# Windows 
 ifeq ($(OS),Windows_NT)
+	SDL2_INCLUDE_PATH = enter_path_to_sdl
+	SDL2_LIB_PATH = enter_path_to_sdl
 	RM = del /q /f
 	EXECUTABLE = game.exe
 	FLAGS = -lmingw32 -lSDL2main -lSDL2
+	CXXFLAGS += -I$(SDL2_INCLUDE_PATH)
+	LDFLAGS += -L$(SDL2_LIB_PATH)
 # MacOS
 else ifeq ($(shell uname), Darwin)
 	SDL2_INCLUDE_PATH = /usr/local/opt/sdl2/include
