@@ -130,6 +130,13 @@ int main(int argc, char** argv) {
 
         for (auto& enemy : enemies) {
             enemy.render(renderer);
+            enemy.update(dt, player.mRect.x, player.mRect.y);
+            if(enemy.checkPlayerCollision(player.mRect)){
+                score = score-1;
+            }
+            if(score<0){
+                running = false;
+            }
             for (auto& bullets : player.bullets) {
                 if (enemy.checkBulletCollision(bullets.mRect)) {
                     enemy.isHit = true;
