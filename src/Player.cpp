@@ -142,6 +142,6 @@ void Player::render(SDL_Renderer* renderer) {
     for (auto& bullet : bullets) {
         bullet.render(renderer);
     }
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+    SDL_SetRenderDrawColor(renderer, 12, 183, 87, 255);
     SDL_RenderFillRect(renderer, &mRect);
 }

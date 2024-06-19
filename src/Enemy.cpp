@@ -32,12 +32,11 @@ bool Enemy::checkBulletCollision(SDL_Rect bulletRect) {
 }
 bool Enemy::checkPlayerCollision(SDL_Rect playerRect) {
     if (SDL_HasIntersection(&playerRect, &mRect)) {
-        std::cout << "player collision" << std::endl;
         return true;
     }
     return false;
 }
 void Enemy::render(SDL_Renderer* renderer) {
-    SDL_SetRenderDrawColor(renderer, 123, 123, 123, 255);
+    SDL_SetRenderDrawColor(renderer, 6, 66, 166, 255);
     SDL_RenderFillRect(renderer, &mRect);
 }

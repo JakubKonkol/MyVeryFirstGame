@@ -123,7 +123,7 @@ int main(int argc, char** argv) {
         }
 
         player.update(SCREEN_WIDTH, SCREEN_HEIGHT, dt, enemies);
-        SDL_SetRenderDrawColor(renderer, 0, 255, 255, 255);
+        SDL_SetRenderDrawColor(renderer, 146, 203, 218, 255);
         SDL_RenderClear(renderer);
         player.render(renderer);
         renderText(renderer, font32, getScore(), black, SCREEN_WIDTH / 2 - 50, 100);
