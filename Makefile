@@ -19,9 +19,13 @@ else ifeq ($(shell uname), Darwin)
 	CXXFLAGS += -I$(SDL2_INCLUDE_PATH)
 	LDFLAGS += -L$(SDL2_LIB_PATH)
 else
+	SDL2_INCLUDE_PATH = enter_path_to_sdl
+	SDL2_LIB_PATH = enter_path_to_sdl
 	RM = rm -f
 	EXECUTABLE = game
-	FLAGS = -lSDL2main -lSDL2
+	FLAGS = -lSDL2main -lSDL2 -lSDL2_ttf
+	CXXFLAGS += -I$(SDL2_INCLUDE_PATH)
+	LDFLAGS += -L$(SDL2_LIB_PATH)
 endif
 
 all: build
