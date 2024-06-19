@@ -55,6 +55,22 @@ void toggleFullScreen(SDL_Window* window, SDL_Renderer* renderer) {
         isFullScreen = true;
     }
 }
+void drawEndgameScreen(SDL_Renderer* renderer, TTF_Font* font){
+    SDL_Color red = { 255, 0, 0 };
+    std::string endgameText = "YOU DIED";
+
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_RenderClear(renderer);
+
+    SDL_Surface* surface = TTF_RenderText_Solid(font, endgameText.c_str(), red);
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+    SDL_Rect destRect = { (SCREEN_WIDTH - surface->w) / 2, (SCREEN_HEIGHT - surface->h) / 2, surface->w, surface->h };
+    SDL_FreeSurface(surface);
+    SDL_RenderCopy(renderer, texture, nullptr, &destRect);
+    SDL_DestroyTexture(texture);
+
+    SDL_RenderPresent(renderer);
+}
 
 std::string getScore() {
     return "SCORE: " + std::to_string(score);
@@ -129,13 +145,18 @@ int main(int argc, char** argv) {
         renderText(renderer, font32, getScore(), black, SCREEN_WIDTH / 2 - 50, 100);
 
         for (auto& enemy : enemies) {
+            if(enemy.checkPlayerCollision(player.mRect)){
+                enemy = enemies.back();
+                enemies.pop_back();
+                score--;
+            }
             enemy.render(renderer);
             enemy.update(dt, player.mRect.x, player.mRect.y);
-            if(enemy.checkPlayerCollision(player.mRect)){
-                score = score-1;
-            }
             if(score<0){
+                drawEndgameScreen(renderer, font32);
+                SDL_Delay(3000); 
                 running = false;
+                break; 
             }
             for (auto& bullets : player.bullets) {
                 if (enemy.checkBulletCollision(bullets.mRect)) {
